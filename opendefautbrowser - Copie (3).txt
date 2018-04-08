@@ -1,0 +1,436 @@
+// ConsoleApplication1.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "stdio.h"
+#include "afx.h"
+#include <string>
+#include <malloc.h>
+#include <iostream>
+#include <vector>  
+
+#include "Exdisp.h"
+#import "shdocvw.dll" 
+#include <MsHTML.h>
+#include <afxdisp.h>
+
+
+using std::cout;
+using std::wcout;
+bool WaitTillLoaded(int nTimeout, IWebBrowser2* m_pWebBrowser);
+bool writeln01(IHTMLDocument2* pHtmlDoc, std::wstring string01);
+bool create_web_main(IHTMLDocument2* phtmldoc);
+IHTMLElement* gethtmele(IHTMLDocument2* phtmldoc, std::wstring frame01);
+
+bool writeln01(IHTMLDocument2* pHtmlDoc, std::wstring string01)
+{
+	SAFEARRAYBOUND bounds[] = { { 1, 0 } }; //Array Contains 2 Elements starting from Index ‘0’ 
+	SAFEARRAY* safearray01 = SafeArrayCreate(VT_VARIANT, 1, bounds); //Create a one-
+	long lIndex[1];
+	VARIANT var;
+	lIndex[0] = 0; // index of the element being inserted in the array 
+	var.vt = VT_BSTR; // type of the element being inserted 
+
+	//var.bstrVal = ::SysAllocStringLen(L"<br>The<br>First String", 16); // the value of the element being inserted 
+	var.bstrVal = ::SysAllocStringLen(string01.c_str(), string01.length()); // the value of the element being inserted 
+	HRESULT hr = SafeArrayPutElement(safearray01, lIndex, &var); // insert the element 
+	pHtmlDoc->writeln(safearray01);
+	return true;
+
+}
+
+bool WaitTillLoaded(int nTimeout, IWebBrowser2* m_pWebBrowser)
+{
+	READYSTATE result;
+	DWORD nFirstTick = GetTickCount();
+
+	do
+	{
+		m_pWebBrowser->get_ReadyState(&result);
+
+		if (result != READYSTATE_COMPLETE)
+			Sleep(100);
+
+		if (nTimeout > 0)
+		{
+			if ((GetTickCount() - nFirstTick) > nTimeout)
+				break;
+		}
+	} while (result != READYSTATE_COMPLETE);
+
+	if (result == READYSTATE_COMPLETE)
+		return true;
+	else
+		return false;
+}
+
+// ==================================
+// MAIN
+// ==================================
+int _tmain(int argc, _TCHAR* argv[])
+{
+	// IE 9.0.8112.16421: IEXPLORE.EXE
+	// Chrome 21.0.1180.60 m : Google Chrome
+	// Firefox 10.0.2 : FIREFOX.EXE
+	// Safari 3.2.2 : Safari.exe
+	// Opera 12.01 : Opera
+	
+	// modified from http://www.codeproject.com/internet/urlnewwindow.asp
+
+	std::string page;
+	std::wstring wstrBrowser01;
+	std::string str01;
+
+	HKEY hKey = NULL;
+	
+	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, TEXT("http\\shell\\open\\command"), 0, KEY_READ, &hKey) == ERROR_SUCCESS)
+	{
+		DWORD cbData = 0;
+		if (RegQueryValueEx(hKey, NULL, NULL, NULL, NULL, &cbData) == ERROR_SUCCESS && cbData > 0)
+		{
+			// command key is present
+			TCHAR* browsername01 = new TCHAR[cbData];
+			
+			if (browsername01 != NULL)
+			{
+				
+			    if (RegQueryValueEx(hKey, NULL, NULL, NULL, (LPBYTE)browsername01, &cbData) == ERROR_SUCCESS)
+				//if (RegQueryValueEx(hKey, NULL, NULL, NULL, reinterpret_cast<LPBYTE>(&browsername01[0]), &cbData) == ERROR_SUCCESS)
+				{
+					
+					wstrBrowser01 = browsername01;
+					// wcout << wstrBrowser01;
+				}
+				delete[] browsername01;
+			}
+		}
+		RegCloseKey(hKey);
+	}
+	else
+	{
+		printf("\r\nERROR could not read regkey");
+	}
+
+
+	if (wstrBrowser01.length() > 0)
+	{
+		std::string::size_type nStart = wstrBrowser01.find('"', 0);
+
+		// if first is a quote, then exe path is in quotes, so find the second quote
+		if (nStart == 0)
+		{
+			std::string::size_type nEnd = wstrBrowser01.find('"', 1);
+			if (nStart != nEnd && nEnd != std::string::npos)
+			{
+				wstrBrowser01 = wstrBrowser01.substr(nStart + 1, nEnd - nStart - 1);
+			}
+		}
+		// otherwise if no quotes, 2nd point is the first space after the last backslash
+		else
+		{
+			std::string::size_type nIndex = wstrBrowser01.rfind('\\', wstrBrowser01.length() - 1);
+			if (nIndex != std::string::npos)
+			{
+				std::string::size_type nSpace = wstrBrowser01.find(' ', nIndex);
+				if (nSpace != std::string::npos)
+				{
+					wstrBrowser01 = wstrBrowser01.substr(0, nSpace);
+				}
+			}
+		}
+
+		std::wstring wcommand01 = L"\"";
+		wcommand01 += wstrBrowser01;
+		wcommand01 += L"\"";
+		std::string arg01 = "\"";
+		arg01 += "www.google.ca";
+		arg01 += "\"";
+		
+		std::string command01(wcommand01.begin(), wcommand01.end());
+
+		printf("\n");
+		printf(command01.c_str());
+		
+		// HINSTANCE hinst01 = ShellExecuteW(NULL, L"open", LPCWSTR(wcommand01.c_str()), NULL, NULL, SW_HIDE);
+		//HINSTANCE hinst01 = ShellExecuteA(NULL, "Open", LPCSTR(command01.c_str()), LPCSTR(arg01.c_str()), NULL, 3);
+		printf("\n");
+		//cout << hinst01;
+		
+		// link handle to application
+
+
+		// COleVariant loc(L"about:blank");
+		// m_explorer.Navigate2("about:blank", NULL, NULL, NULL, NULL);
+		// IDispatch* pHtmlDoc = m_explorer.get_Document();
+
+	}
+	else
+	{
+		printf("\r\n\r\nERROR strBrowser01.length is 0");
+	}
+	printf("\r\nFIN");
+
+	// ole object web browser internet explorer
+	// https://msdn.microsoft.com/en-us/library/aa752127(v=vs.85).aspx
+	// https://www.codeproject.com/articles/12029/automate-the-active-windows-explorer-or-internet-e
+	
+	// browse all element html
+	// http://www.codeguru.com/cpp/i-n/internet/browsercontrol/article.php/c6175/Creating-an-Internet-Explorer-Helper-Class.htm
+	
+	// event
+	// https://msdn.microsoft.com/en-us/library/bb508508(v=vs.85).aspx
+	
+	// writeln
+	// https://blogs.msdn.microsoft.com/gpalem/2007/04/27/how-to-return-string-arrays-from-c-com-component-to-c/
+
+
+	if (SUCCEEDED(OleInitialize(NULL)))
+	{
+		
+		IWebBrowser2*    pBrowser2;
+
+		CoCreateInstance(CLSID_InternetExplorer, NULL, CLSCTX_LOCAL_SERVER, IID_IWebBrowser2, (void**)&pBrowser2);
+		if (pBrowser2)
+		{
+			VARIANT vEmpty;
+			VariantInit(&vEmpty);
+
+			BSTR bstrURL = SysAllocString(L"about:blank");
+
+			HRESULT hr = pBrowser2->Navigate(bstrURL, &vEmpty, &vEmpty, &vEmpty, &vEmpty);
+			if (SUCCEEDED(hr))
+			{
+				pBrowser2->put_Height(800);
+				pBrowser2->put_Width(1500);
+
+				pBrowser2->put_AddressBar(VARIANT_TRUE);
+				pBrowser2->put_MenuBar(VARIANT_FALSE);
+				pBrowser2->put_ToolBar(VARIANT_FALSE);
+
+				pBrowser2->put_Visible(VARIANT_TRUE);
+
+				if (WaitTillLoaded(12, pBrowser2)) /// wait 12 tick of 250 ms to expire
+				{
+					printf("\nready in time");
+					HRESULT hr;
+					IDispatch* pHtmlDocDispatch = NULL;
+					IHTMLDocument2* pHtmlDoc = NULL;
+					bool bSearch = true;
+
+					// Retrieve the document object.
+					hr = pBrowser2->get_Document(&pHtmlDocDispatch);
+					if (SUCCEEDED(hr) && (pHtmlDocDispatch != NULL))
+					{
+						hr = pHtmlDocDispatch->QueryInterface(IID_IHTMLDocument2, (void**)&pHtmlDoc);
+						if (SUCCEEDED(hr) && (pHtmlDoc != NULL))
+						{
+							printf("\ngot a DOC");
+
+							// write html in doc
+							// pHtmlDoc
+							// =======================================
+							bool dummy;
+							// dummy = writeln01(pHtmlDoc, L"<br>Salut les amis");
+							// dummy = writeln01(pHtmlDoc, L"<br>Comment allez-vous?");
+
+							// shall return 3 frames, internet explorer object
+							dummy = create_web_main(pHtmlDoc);
+							
+							// pHtmlDoc->put_title(BSTR("SkyNet30"));
+							// pHtmlDoc->put_URL(BSTR("www.google.com"));
+							// pHtmlDoc->execCommand(BSTR("RELOAD"));
+
+							
+							// scan doc object collection for an object change (menu)
+							IHTMLElementCollection* pColl = NULL;
+							hr = pHtmlDoc->get_all(&pColl);
+							if (SUCCEEDED(hr) && (pColl != NULL))
+							{
+								// Obtained the Anchor Collection...
+								long nLength = 0;
+								pColl->get_length(&nLength);
+
+								for (int i = 0; i < nLength && bSearch; i++)
+								{
+									COleVariant vIdx((long)i, VT_I4);
+
+									IDispatch* pElemDispatch = NULL;
+									IHTMLElement * pElem = NULL;
+
+									hr = pColl->item(vIdx, vIdx, &pElemDispatch);
+
+									if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+									{
+										hr = pElemDispatch->QueryInterface
+											(IID_IHTMLElement, (void**)&pElem);
+
+										if (SUCCEEDED(hr) && (pElem != NULL))
+										{
+											BSTR bstrTagName;
+											std::string sTempTagName;
+											if (!FAILED(pElem->get_tagName(&bstrTagName)))
+											{
+												// conversion error
+												// sTempTagName = bstrTagName;
+												SysFreeString(bstrTagName);
+											}
+										} //if (SUCCEEDED(hr) && (pElem != NULL))
+									
+									} //if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+									pElemDispatch->Release();
+								} //for (int i = 0; i < nLength && bSearch; i++)
+								
+							} //if (SUCCEEDED(hr) && (pColl != NULL))
+							pColl->Release();
+						
+						} //if (SUCCEEDED(hr) && (pHtmlDoc != NULL))
+						
+						else
+						{
+							printf("\nNOT got a DOC");
+						}
+						pHtmlDoc->Release();
+					} //if (SUCCEEDED(hr) && (pHtmlDocDispatch != NULL))
+					pHtmlDocDispatch->Release();
+				} // if (WaitTillLoaded(12, pBrowser2)) /// wait 12 tick of 250 ms to expire
+				else
+					{
+						printf("\nERROR iexplore not ready in time of 12 x 250 ms ticks");
+					}
+
+			} //if (SUCCEEDED(hr))
+
+			// pause
+			Sleep(4000);
+				
+			// LOOP
+
+
+			// close internet explorer
+			pBrowser2->Quit();
+
+		} // if (pBrowser2)
+			else
+			{
+				pBrowser2->Quit();
+			}
+
+			// SysFreeString(bstrURL);
+			pBrowser2->Release();
+		} // if (SUCCEEDED(OleInitialize(NULL)))
+
+		
+		OleUninitialize();
+	
+	return 0;
+	
+}
+bool create_web_main(IHTMLDocument2* phtmldoc)
+{
+	// vector https://msdn.microsoft.com/en-us/library/9xd04bzs.aspx
+	std::vector<std::string> arrbutnam;
+	std::vector<std::string> arrbutdes;
+	std::vector<std::string> arrdepnam;
+	std::vector<std::string> arrdepcol;
+	
+	arrbutnam.push_back("componentssearch");
+	arrbutnam.push_back("Components Search");
+	arrbutnam.push_back("SEARCH");
+	arrbutnam.push_back("cccccc");
+
+	arrbutnam.push_back("clrframes");
+	arrbutnam.push_back("Clear Frames");
+	arrbutnam.push_back("OTHER");
+	arrbutnam.push_back("cccccc");
+
+	arrbutnam.push_back("info");
+	arrbutnam.push_back("Information/Help");
+	arrbutnam.push_back("OTHER");
+	arrbutnam.push_back("cccccc");
+
+	arrbutnam.push_back("quit01");
+	arrbutnam.push_back("Quit");
+	arrbutnam.push_back("All");
+	arrbutnam.push_back("cccccc");
+
+	cout<< arrbutnam[0];
+	std::wstring arrhtm[] = {
+		L"<HTML>",
+		L"<HEAD><TITLE>Skynet30</TITLE></HEAD>",
+		L"<FRAMESET id='main' COLS=\"251, *\">",
+		L"<FRAME SRC=\"About:Blank\" NAME=\"flef\" id=\"flef\">",
+		L"<frameset id='main2' rows=\"30%,70%\">",
+		L"<FRAME SRC=\"About:Blank\" NAME=\"fmid\" id=\"fmid\">",
+		L"<FRAME SRC=\"About:Blank\" NAME=\"fbot\" id=\"fbot\">",
+		L"</FRAMESET>",
+		L"</frameset>",
+		L"</HTML>" };
+
+	for (size_t i = 0; i < arrhtm[i].length(); i++)
+	{
+		int dummy = writeln01(phtmldoc, arrhtm[i]);
+	}
+
+	IHTMLElement* flef = gethtmele(phtmldoc, L"flef");
+	//IHTMLElement* fmid = ;
+	//IHTMLElement* fbot = ;
+
+	
+	return 0;
+}
+
+
+IHTMLElement* gethtmele(IHTMLDocument2* phtmldoc, std::wstring frame01)
+{
+	bool bSearch = true;
+	IHTMLElementCollection* pColl = NULL;
+	std::wstring temptagname01;
+
+	int hr = phtmldoc->get_all(&pColl);
+	if (SUCCEEDED(hr) && (pColl != NULL))
+	{
+		// Obtained the Anchor Collection...
+		long nLength = 0;
+		pColl->get_length(&nLength);
+
+		for (int i = 0; i < nLength && bSearch; i++)
+		{
+			COleVariant vIdx((long)i, VT_I4);
+
+			IDispatch* pElemDispatch = NULL;
+			IHTMLElement * pElem = NULL;
+
+			hr = pColl->item(vIdx, vIdx, &pElemDispatch);
+
+			if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+			{
+				hr = pElemDispatch->QueryInterface(IID_IHTMLElement, (void**)&pElem);
+
+				if (SUCCEEDED(hr) && (pElem != NULL))
+				{
+					BSTR bstrTagName;
+					std::string sTempTagName;
+					if (!FAILED(pElem->get_tagName(&bstrTagName)))
+					{
+						// conversion error
+						temptagname01 = bstrTagName;
+						//SysFreeString(bstrTagName);
+						wcout << L"\n";
+						wcout << bstrTagName;
+						if (temptagname01 == L"FRAME" || temptagname01 == L"frame")
+						{ 
+							wcout << L"\n";
+							wcout << L"found a frame";
+						}
+
+					}
+				} //if (SUCCEEDED(hr) && (pElem != NULL))
+
+			} //if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+			pElemDispatch->Release();
+		} //for (int i = 0; i < nLength && bSearch; i++)
+
+	} //if (SUCCEEDED(hr) && (pColl != NULL))
+	return 0;
+
+}

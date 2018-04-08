@@ -1,0 +1,779 @@
+// ConsoleApplication1.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "stdio.h"
+#include "afx.h"
+#include <string>
+#include <malloc.h>
+#include <iostream>
+#include <vector>  
+
+#include "Exdisp.h"
+#import "shdocvw.dll" 
+#include <MsHTML.h>
+#include <afxdisp.h>
+
+
+using std::cout;
+using std::wcout;
+
+bool WaitTillLoaded(int nTimeout);
+int writeln01(IHTMLDocument2* phtmldoc1, std::wstring string01);
+int create_web_main();
+IHTMLDocument2* gethtmele(IHTMLDocument2* phtmldoc3, std::wstring frame01);
+int gethtmele2(IHTMLDocument2* phtmldoc3, std::wstring frame01);
+
+IWebBrowser2* pbrowser;
+IHTMLDocument2* flef;
+IHTMLDocument3* flef3;
+IHTMLDocument2* fmid;
+IHTMLDocument2* fbot;
+IHTMLDocument2* pHtmlDoc;
+
+//STDMETHODIMP CEventHandler::Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
+
+class CEventHandler : public IDispatch
+{
+public:
+	STDMETHODIMP QueryInterface(REFIID riid, void **ppvObject);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
+
+	STDMETHODIMP GetTypeInfoCount(UINT *pctinfo);
+	STDMETHODIMP GetTypeInfo(UINT iTInfo, LCID lcid, ITypeInfo **ppTInfo);
+	STDMETHODIMP GetIDsOfNames(REFIID riid, LPOLESTR *rgszNames, UINT cNames, LCID lcid, DISPID *rgDispId);
+	STDMETHODIMP Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr);
+
+	CEventHandler(IHTMLWindow2 *pWindow2);
+
+public:
+	LONG         m_cRef;
+	IHTMLWindow2 *m_pWindow2;
+};
+
+BOOL PutEventHandler(IHTMLDocument3 *pDocument3);
+BOOL GetDocumentFromIE(IHTMLDocument3 **pp);
+BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam);
+
+int writeln01(IHTMLDocument2* phtmldoc1, std::wstring string01)
+{
+	SAFEARRAYBOUND bounds[] = { { 1, 0 } }; //Array Contains 2 Elements starting from Index ‘0’ 
+	SAFEARRAY* safearray01 = SafeArrayCreate(VT_VARIANT, 1, bounds); //Create a one-
+	long lIndex[1];
+	VARIANT var;
+	lIndex[0] = 0; // index of the element being inserted in the array 
+	var.vt = VT_BSTR; // type of the element being inserted 
+
+	//var.bstrVal = ::SysAllocStringLen(L"<br>The<br>First String", 16); // the value of the element being inserted 
+	var.bstrVal = ::SysAllocStringLen(string01.c_str(), string01.length()); // the value of the element being inserted 
+	HRESULT hr = SafeArrayPutElement(safearray01, lIndex, &var); // insert the element 
+	//if (WaitTillLoaded(0)== TRUE)
+	//{
+		phtmldoc1->writeln(safearray01);
+	//}
+	
+	return 0;
+}
+
+bool WaitTillLoaded(int nTimeout)
+{
+	READYSTATE result;
+	DWORD nFirstTick = GetTickCount();
+
+	do
+	{
+		pbrowser->get_ReadyState(&result);
+		
+		if (result != READYSTATE_COMPLETE)
+		{
+			Sleep(100);
+		}
+		if (nTimeout > 0)
+		{
+			if ((GetTickCount() - nFirstTick) > nTimeout)
+			{
+				break;
+			}
+		}
+	} while (result != READYSTATE_COMPLETE);
+
+	if (result == READYSTATE_COMPLETE)
+	{
+		//cout << "true";
+		return TRUE;
+	}
+	else
+	{
+		//cout << "false";
+		return FALSE;
+	}
+}
+
+// ==================================
+// MAIN
+// ==================================
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	// IE 9.0.8112.16421: IEXPLORE.EXE
+	// Chrome 21.0.1180.60 m : Google Chrome
+	// Firefox 10.0.2 : FIREFOX.EXE
+	// Safari 3.2.2 : Safari.exe
+	// Opera 12.01 : Opera
+	
+	// modified from http://www.codeproject.com/internet/urlnewwindow.asp
+
+	std::string page;
+	std::wstring wstrBrowser01;
+	std::string str01;
+	
+	HKEY hKey = NULL;
+	
+	// get defaut internet browser
+	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, TEXT("http\\shell\\open\\command"), 0, KEY_READ, &hKey) == ERROR_SUCCESS)
+	{
+		DWORD cbData = 0;
+		if (RegQueryValueEx(hKey, NULL, NULL, NULL, NULL, &cbData) == ERROR_SUCCESS && cbData > 0)
+		{
+			// command key is present
+			TCHAR* browsername01 = new TCHAR[cbData];
+			
+			if (browsername01 != NULL)
+			{
+				
+			    if (RegQueryValueEx(hKey, NULL, NULL, NULL, (LPBYTE)browsername01, &cbData) == ERROR_SUCCESS)
+				//if (RegQueryValueEx(hKey, NULL, NULL, NULL, reinterpret_cast<LPBYTE>(&browsername01[0]), &cbData) == ERROR_SUCCESS)
+				{
+					
+					wstrBrowser01 = browsername01;
+					// wcout << wstrBrowser01;
+				}
+				delete[] browsername01;
+			}
+		}
+		RegCloseKey(hKey);
+	}
+	else
+	{
+		printf("\r\nERROR could not read regkey");
+	}
+
+	// get path of executable and remove stuff around it
+	if (wstrBrowser01.length() > 0)
+	{
+		std::string::size_type nStart = wstrBrowser01.find('"', 0);
+
+		// if first is a quote, then exe path is in quotes, so find the second quote
+		if (nStart == 0)
+		{
+			std::string::size_type nEnd = wstrBrowser01.find('"', 1);
+			if (nStart != nEnd && nEnd != std::string::npos)
+			{
+				wstrBrowser01 = wstrBrowser01.substr(nStart + 1, nEnd - nStart - 1);
+			}
+		}
+		// otherwise if no quotes, 2nd point is the first space after the last backslash
+		else
+		{
+			std::string::size_type nIndex = wstrBrowser01.rfind('\\', wstrBrowser01.length() - 1);
+			if (nIndex != std::string::npos)
+			{
+				std::string::size_type nSpace = wstrBrowser01.find(' ', nIndex);
+				if (nSpace != std::string::npos)
+				{
+					wstrBrowser01 = wstrBrowser01.substr(0, nSpace);
+				}
+			}
+		}
+
+		std::wstring wcommand01 = L"\"";
+		wcommand01 += wstrBrowser01;
+		wcommand01 += L"\"";
+		std::string arg01 = "\"";
+		arg01 += "www.google.ca";
+		arg01 += "\"";
+		
+		std::string command01(wcommand01.begin(), wcommand01.end());
+
+		printf("\n");
+		printf("default browser: ");
+		printf(command01.c_str());
+		
+		// HINSTANCE hinst01 = ShellExecuteW(NULL, L"open", LPCWSTR(wcommand01.c_str()), NULL, NULL, SW_HIDE);
+		//HINSTANCE hinst01 = ShellExecuteA(NULL, "Open", LPCSTR(command01.c_str()), LPCSTR(arg01.c_str()), NULL, 3);
+		//printf("\n");
+		//cout << hinst01;
+		
+		// link handle to application
+
+
+		// COleVariant loc(L"about:blank");
+		// m_explorer.Navigate2("about:blank", NULL, NULL, NULL, NULL);
+		// IDispatch* pHtmlDoc = m_explorer.get_Document();
+
+	}
+	else
+	{
+		printf("\r\n\r\nERROR strBrowser01.length is 0");
+	}
+	
+	int hr;
+
+	// ole object web browser internet explorer
+	// https://msdn.microsoft.com/en-us/library/aa752127(v=vs.85).aspx
+	// https://www.codeproject.com/articles/12029/automate-the-active-windows-explorer-or-internet-e
+	
+	// browse all element html
+	// http://www.codeguru.com/cpp/i-n/internet/browsercontrol/article.php/c6175/Creating-an-Internet-Explorer-Helper-Class.htm
+	
+	// event
+	// https://msdn.microsoft.com/en-us/library/bb508508(v=vs.85).aspx
+	
+	// writeln
+	// https://blogs.msdn.microsoft.com/gpalem/2007/04/27/how-to-return-string-arrays-from-c-com-component-to-c/
+
+
+	// write html in doc
+	// pHtmlDoc
+	// =======================================
+	int dummy;
+	// dummy = writeln01(pHtmlDoc, L"<br>Salut les amis");
+	// dummy = writeln01(pHtmlDoc, L"<br>Comment allez-vous?");
+
+	// shall return 3 frames, internet explorer object
+	dummy = create_web_main();
+							
+	dummy = writeln01(flef, L"flef");
+	dummy = writeln01(fmid, L"fmid");
+	dummy = writeln01(fbot, L"fbot");
+	
+	bool bSearch = true;
+	
+	// scan doc object collection for an object change (menu)
+	IHTMLElementCollection* pColl = NULL;
+	hr = flef->get_all(&pColl);
+	if (SUCCEEDED(hr) && (pColl != NULL))
+	{
+		// Obtained the Anchor Collection...
+		long nLength = 0;
+		pColl->get_length(&nLength);
+
+		for (int i = 0; i < nLength && bSearch; i++)
+		{
+			COleVariant vIdx((long)i, VT_I4);
+
+			IDispatch* pElemDispatch = NULL;
+			IHTMLElement * pElem = NULL;
+
+			hr = pColl->item(vIdx, vIdx, &pElemDispatch);
+
+			if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+			{
+				hr = pElemDispatch->QueryInterface(IID_IHTMLElement, (void**)&pElem);
+
+				if (SUCCEEDED(hr) && (pElem != NULL))
+				{
+					BSTR bstrTagName;
+					std::wstring sTempTagName;
+					if (!FAILED(pElem->get_tagName(&bstrTagName)))
+					{
+						// conversion error
+						sTempTagName = bstrTagName;
+						//SysFreeString(bstrTagName);
+
+						if (sTempTagName == L"input" || sTempTagName == L"INPUT")
+						{
+							BSTR bstrtagid;
+							hr = pElem->get_id(&bstrtagid);
+							if (SUCCEEDED(hr))
+							{
+								wcout << L"\n";
+								sTempTagName = bstrtagid;
+								wcout << bstrtagid;
+
+								// buttons identified
+								
+								//hr = pElem->put_onclick();
+								bool testing;
+								
+								testing = PutEventHandler(flef3);
+
+
+							}
+						}
+					}
+				} //if (SUCCEEDED(hr) && (pElem != NULL))
+									
+			} //if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+			pElemDispatch->Release();
+		} //for (int i = 0; i < nLength && bSearch; i++)
+								
+	} //if (SUCCEEDED(hr) && (pColl != NULL))
+
+	Sleep(4000);
+	// close internet explorer
+	pbrowser->Quit();
+	pbrowser->Release();
+	
+	return 0;
+}
+
+IHTMLDocument2* gethtmele(IHTMLDocument2* phtmldoc3, std::wstring frame01)
+{
+	// get frame object document to write in html frames
+	bool bSearch = true;
+	int hr;
+
+	// https://github.com/SeleniumHQ/selenium/blob/master/cpp/iedriver/DocumentHost.cpp
+	CComQIPtr<IHTMLFramesCollection2> frames;
+
+	hr = phtmldoc3->get_frames(&frames);
+	if (SUCCEEDED(hr) && (frames != NULL))
+	{
+		// get howmany frames
+		long length = 0;
+		hr = frames->get_length(&length);
+
+		if (SUCCEEDED(hr) && length > 0)
+		{
+			CComVariant frame_identifier = NULL;
+			frame_identifier = frame01.c_str();
+
+			CComVariant frame_holder = NULL;
+			hr = frames->item(&frame_identifier, &frame_holder);
+			if (SUCCEEDED(hr))
+			{
+				/// get frame content
+				IHTMLWindow2* interim_result;
+				hr = frame_holder.pdispVal->QueryInterface<IHTMLWindow2>(&interim_result);
+				
+				if (SUCCEEDED(hr))
+				{
+					IDispatch* pIHTMLDoc;
+					hr = interim_result->get_document((IHTMLDocument2 **)&pIHTMLDoc);
+
+					if (SUCCEEDED(hr))
+					{
+						IHTMLDocument2* frameele = NULL;
+						IHTMLDocument3* frameele3 = NULL;
+						hr = pIHTMLDoc->QueryInterface(IID_IHTMLDocument3, (void**)&frameele3);
+						hr = pIHTMLDoc->QueryInterface(IID_IHTMLDocument2, (void**)&frameele);
+						if (SUCCEEDED(hr))
+						{
+							//int dummy = writeln01(frameele, L"TEST222");
+							flef3 = frameele3;
+							return frameele;
+						}
+						else
+						{
+							wcout << L"\n";
+							cout << "ERROR getting IHTMLDocument2";
+						}
+					}
+					else
+					{
+						wcout << L"\n";
+						cout << "ERROR getting pointer to IHTMLDocument2";
+					}
+				}
+				else
+				{
+					wcout << L"\n";
+					cout << "ERROR getting window pointer";
+				}
+			}
+			else
+			{
+				wcout << L"\n";
+				cout << "ERROR did not find any frame named: ";
+				wcout << frame01;
+			}
+		}
+		else
+		{
+			wcout << L"\n";
+			cout << "ERROR get_length(&length) - number of frames is 0)";
+		}
+	}
+	else
+	{
+		wcout << L"\n";
+		cout << "ERROR get_frames(&frames) - no frame collection found";
+	}
+	
+}
+int create_web_main()
+{
+	// vector https://msdn.microsoft.com/en-us/library/9xd04bzs.aspx
+
+	int dummy;
+
+	std::vector<std::wstring> arrbutnam;
+	std::vector<std::wstring> arrbutdes;
+	std::vector<std::wstring> arrdepnam;
+	std::vector<std::wstring> arrdepcol;
+
+	arrbutnam.push_back(L"test");
+	arrbutdes.push_back(L"test");
+	arrdepnam.push_back(L"TEST");
+	arrdepcol.push_back(L"cccccc");
+
+	arrbutnam.push_back(L"clrframes");
+	arrbutdes.push_back(L"Clear Frames");
+	arrdepnam.push_back(L"OTHER");
+	arrdepcol.push_back(L"cccccc");
+
+	arrbutnam.push_back(L"info");
+	arrbutdes.push_back(L"Information/Help");
+	arrdepnam.push_back(L"OTHER");
+	arrdepcol.push_back(L"cccccc");
+
+	arrbutnam.push_back(L"quit01");
+	arrbutdes.push_back(L"Quit");
+	arrdepnam.push_back(L"ALL");
+	arrdepcol.push_back(L"cccccc");
+
+	//cout<< arrbutnam[0];
+	std::wstring arrhtm[] = {
+		L"<HTML>",
+		L"<HEAD><TITLE>Skynet30</TITLE>",
+		L"<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">",
+		L"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\">",
+		L"</HEAD>",
+		L"<FRAMESET id='main' COLS=\"13%, *\">",
+		L"<FRAME SRC=\"About:Blank\" NAME=\"flef\" id=\"flef\">",
+		L"<frameset id='main2' rows=\"30%,70%\">",
+		L"<FRAME SRC=\"About:Blank\" NAME=\"fmid\" id=\"fmid\">",
+		L"<FRAME SRC=\"About:Blank\" NAME=\"fbot\" id=\"fbot\">",
+		L"</FRAMESET>",
+		L"</frameset>",
+		L"</HTML>" };
+
+	if (SUCCEEDED(OleInitialize(NULL)))
+	{
+		CoCreateInstance(CLSID_InternetExplorer, NULL, CLSCTX_LOCAL_SERVER, IID_IWebBrowser2, (void**)&pbrowser);
+		if (pbrowser)
+		{
+			VARIANT vEmpty;
+			VariantInit(&vEmpty);
+
+			BSTR bstrURL = SysAllocString(L"about:blank");
+
+			HRESULT hr = pbrowser->Navigate(bstrURL, &vEmpty, &vEmpty, &vEmpty, &vEmpty);
+			if (SUCCEEDED(hr))
+			{
+				pbrowser->put_Left(20);
+				pbrowser->put_Top(10);
+				pbrowser->put_Height(1000); // 1080
+				pbrowser->put_Width(1900); // 1920
+
+				int test = 1;
+				if (test == 1)
+				{
+					pbrowser->put_Left(700);
+					pbrowser->put_Top(10);
+					pbrowser->put_Height(1000); // 1080
+					pbrowser->put_Width(1200); // 1920
+
+				}
+
+				pbrowser->put_AddressBar(VARIANT_TRUE);
+				pbrowser->put_MenuBar(VARIANT_FALSE);
+				pbrowser->put_ToolBar(VARIANT_FALSE);
+				// pHtmlDoc->put_title(BSTR("SkyNet30"));
+				// pHtmlDoc->put_URL(BSTR("www.google.com"));
+				// pHtmlDoc->execCommand(BSTR("RELOAD"));
+				pbrowser->put_Visible(VARIANT_TRUE);
+
+				if (WaitTillLoaded(12)) /// wait 12 tick of 250 ms to expire
+				{
+					// printf("\nready in time");
+					HRESULT hr;
+					IDispatch* pHtmlDocDispatch = NULL;
+					pHtmlDoc = NULL;
+
+					// Retrieve the document object.
+					hr = pbrowser->get_Document(&pHtmlDocDispatch);
+					if (SUCCEEDED(hr) && (pHtmlDocDispatch != NULL))
+					{
+						hr = pHtmlDocDispatch->QueryInterface(IID_IHTMLDocument2, (void**)&pHtmlDoc);
+						if (SUCCEEDED(hr) && (pHtmlDoc != NULL))
+						{
+							//printf("\ngot a DOC");
+
+							for (size_t i = 0; i < arrhtm[i].length(); i++)
+							{
+								dummy = writeln01(pHtmlDoc, arrhtm[i]);
+							}
+
+							pbrowser->Refresh();
+
+							// IHTMLDocument2* flef;
+							flef = gethtmele(pHtmlDoc, L"flef");
+							//IHTMLDocument2* fmid;
+							fmid = gethtmele(pHtmlDoc, L"fmid");
+							//IHTMLDocument2* fbot;
+							fbot = gethtmele(pHtmlDoc, L"fbot");
+
+							/////////////////////////////// buttons on left frame generation
+
+							std::wstring departement;
+							std::wstring lasdep;
+							std::wstring html;
+
+							for (int i = 0; i < arrbutnam.size(); i++)
+							{
+								html = L"<input type=\"button\" style=\"height:50px;font-size:14px;width:100%;white-space: normal;\" id=\"" + arrbutnam[i] + L"\" name=\"" + arrbutnam[i] + L"\" value=\"" + arrbutdes[i] + L"\"";
+								int i2 = i;
+
+								if (i>arrdepnam.size())
+									i2 = arrdepnam.size();
+								else
+									departement = arrdepnam[i2];
+
+								if (departement != lasdep)
+								{
+									lasdep = departement;
+									dummy = writeln01(flef, L"<br>" + departement + L"<br>");
+								}
+								html += L" style=\"background-color: #" + arrdepcol[i2] + L"; color: #000000;\"><br>";
+								dummy = writeln01(flef, html);
+							}
+							//flef->execCommand("reload");
+							////////////////////////// define event on buttons we just created
+							IHTMLLocation* location01 = NULL;
+							hr = flef->get_location(&location01);
+							if (SUCCEEDED(hr))
+							{
+								CComBSTR locHref;
+								hr = location01->reload();
+							}
+							else
+							{
+								wcout<<L"\n";
+								wcout<<L"ERROR loading location of frame";
+							}
+
+							/// get buttons to define events
+
+							//dummy = gethtmele2(flef, L"test");
+
+
+							//hr = flef->put_URL();
+							//hr = flef->put_onclick(testclick);
+							
+							//hr = flef->put_onkeypress(testkeypress);
+
+							return 0;
+						} // hr = pHtmlDocDispatch->QueryInterface(IID_IHTMLDocument2
+					} // hr = pbrowser->get_Document(&pHtmlDocDispatch);
+				} // waittill loaded (not always working)
+			} // HRESULT hr = pbrowser->Navigate(
+		} //CoCreateInstance(CLSID_InternetExplorer
+		OleUninitialize();
+	}
+	else
+	{
+		// oleinitialize failed
+	}
+}
+
+// event
+// https://lists.w3.org/Archives/Public/w3c-wai-ua/2000JanMar/att-0287/htmlevent.htm
+
+// idispatch
+
+// https://msdn.microsoft.com/en-us/library/windows/desktop/ms221037(v=vs.85).aspx
+
+// STDMETHOD(OnClick)(IDispatch* pdispBody, VARIANT varColor)
+//CComPtr<IHTMLElement> pBodyElementA;
+//ATLENSURE_SUCCEEDED(pDocument->get_body(&pBodyElementA));
+//CComPtr<IDispatch> pSinkDispatch;
+//ATLENSURE_SUCCEEDED(CDispatchEventSink::CreateInstance(&pSinkDispatch));
+//CComVariant vValue = pSinkDispatch;
+//ATLENSURE_SUCCEEDED(reinterpret_cast<CComPtr<IDispatch>&>(pBodyElementA).
+//	PutPropertyByName(L"onresize", &vValue));
+
+// idispatch
+// http://prog3.com/sbdm/blog/zzstack/article/details/40301545
+// JavaScript
+//function AlertUser(user)
+//{
+//	alert(user.name);
+//	return user.age;
+//}
+
+
+// http://stackoverflow.com/questions/18342200/how-do-i-call-eval-in-ie-from-c
+// C++
+
+// flef.forms(0).elements(arabutnam(i)).onclick = getref("buttonlef")
+// set flef.onkeypress = GetRef("Checklef") 
+
+// sub buttonlef
+// set src = flef.parentWindow.event.srcElement
+// resbutlefstr = src.name
+// end sub
+
+// GOOD FULL CODE
+// http://eternalwindows.jp/browser/mshtml/mshtml07.html
+
+
+int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hinstPrev, LPSTR lpszCmdLine, int nCmdShow)
+{
+	IHTMLDocument3 *pDocument3;
+
+	CoInitialize(NULL);
+
+	//if (!GetDocumentFromIE(&pDocument3)) {
+		//CoUninitialize();
+		//return 0;
+	//}
+
+	//PutEventHandler(pDocument3);
+
+	CoUninitialize();
+
+	return 0;
+}
+
+BOOL PutEventHandler(IHTMLDocument3 *pDocument3)
+{
+	BSTR           bstrId;
+	VARIANT        var;
+	IHTMLElement   *pElement;
+	IHTMLDocument2 *pDocument2;
+	IHTMLWindow2   *pWindow2;
+
+	bstrId = SysAllocString(L"test");
+	pDocument3->getElementById(bstrId, &pElement);
+	if (pElement == NULL) {
+		SysFreeString(bstrId);
+		return FALSE;
+	}
+
+	pDocument3->QueryInterface(IID_PPV_ARGS(&pDocument2));
+	pDocument2->get_parentWindow(&pWindow2);
+
+	var.vt = VT_DISPATCH;
+	var.pdispVal = new CEventHandler(pWindow2);
+	pElement->put_onclick(var);
+
+	MessageBox(NULL, TEXT("test"), TEXT("OK"), MB_OK);
+
+	SysFreeString(bstrId);
+	var.pdispVal->Release();
+	pWindow2->Release();
+	pDocument2->Release();
+	pElement->Release();
+
+	return TRUE;
+}
+
+BOOL GetDocumentFromIE(IHTMLDocument3 **pp)
+{
+	HWND    hwnd;
+	UINT    uMsg;
+	LRESULT lResult;
+	HRESULT hr;
+
+	EnumChildWindows(FindWindow(TEXT("IEFrame"), NULL), EnumChildProc, (LPARAM)&hwnd);
+	if (hwnd == NULL)
+		return FALSE;
+
+	uMsg = RegisterWindowMessage(TEXT("WM_HTML_GETOBJECT"));
+	if (!SendMessageTimeout(hwnd, uMsg, 0, 0, SMTO_ABORTIFHUNG, 1000, (LPDWORD)&lResult))
+		return FALSE;
+	hr = 0;
+	//hr = ObjectFromLresult(lResult, IID_IHTMLDocument3, 0, (void **)pp);
+	if (FAILED(hr))
+		return FALSE;
+
+	return TRUE;
+}
+
+BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
+{
+	TCHAR szClassName[256];
+
+	GetClassName(hwnd, szClassName, sizeof(szClassName) / sizeof(TCHAR));
+	if (lstrcmp(szClassName, TEXT("Internet Explorer_Server")) == 0) {
+		*((HWND *)lParam) = hwnd;
+		return FALSE;
+	}
+	else
+		return TRUE;
+}
+
+CEventHandler::CEventHandler(IHTMLWindow2 *pWindow2)
+{
+	m_cRef = 1;
+	m_pWindow2 = pWindow2;
+}
+
+STDMETHODIMP CEventHandler::QueryInterface(REFIID riid, void **ppvObject)
+{
+	*ppvObject = NULL;
+
+	if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_IDispatch))
+		*ppvObject = static_cast<IDispatch *>(this);
+	else
+		return E_NOINTERFACE;
+
+	AddRef();
+
+	return S_OK;
+}
+
+STDMETHODIMP_(ULONG) CEventHandler::AddRef()
+{
+	return InterlockedIncrement(&m_cRef);
+}
+
+STDMETHODIMP_(ULONG) CEventHandler::Release()
+{
+	if (InterlockedDecrement(&m_cRef) == 0) {
+		delete this;
+		return 0;
+	}
+
+	return m_cRef;
+}
+
+STDMETHODIMP CEventHandler::GetTypeInfoCount(UINT *pctinfo)
+{
+	*pctinfo = 0;
+
+	return S_OK;
+}
+
+STDMETHODIMP CEventHandler::GetTypeInfo(UINT iTInfo, LCID lcid, ITypeInfo **ppTInfo)
+{
+	return E_NOTIMPL;
+}
+
+STDMETHODIMP CEventHandler::GetIDsOfNames(REFIID riid, LPOLESTR *rgszNames, UINT cNames, LCID lcid, DISPID *rgDispId)
+{
+	return E_NOTIMPL;
+}
+
+
+STDMETHODIMP CEventHandler::Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
+{
+	BSTR          bstr;
+	IHTMLEventObj *pEventObj;
+	IHTMLElement  *pElement;
+
+	m_pWindow2->get_event(&pEventObj);
+	pEventObj->get_srcElement(&pElement);
+	pElement->get_tagName(&bstr);
+
+	MessageBoxW(NULL, bstr, L"bouton presse", MB_OK);
+
+	SysFreeString(bstr);
+	pElement->Release();
+	pEventObj->Release();
+
+	return S_OK;
+}

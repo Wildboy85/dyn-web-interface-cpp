@@ -1,0 +1,966 @@
+// ConsoleApplication1.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "stdio.h"
+#include "afx.h"
+#include <string>
+#include <malloc.h>
+#include <iostream>
+#include <vector>  
+
+#include "Exdisp.h"
+#import "shdocvw.dll" 
+#include <MsHTML.h>
+#include <afxdisp.h>
+
+using std::cout;
+using std::wcout;
+
+bool WaitTillLoaded(int nTimeout);
+int writeln01(IHTMLDocument2* phtmldoc1, std::wstring string01);
+int create_web_main();
+IHTMLDocument2* gethtmele(IHTMLDocument2* phtmldoc2, std::wstring frame01);
+void doevents();
+std::string getdefaultbrowserpath();
+void clrfra(IHTMLDocument2* fra);
+
+HWND m_hWnd; // handle for this console application
+IWebBrowser2* pbrowser; // internet explorer object
+IHTMLDocument2* flef; // frame left document html
+IHTMLDocument2* fmid;
+IHTMLDocument2* fbot; 
+IHTMLDocument2* pHtmlDoc; // main itnernet explorer windows html content
+bool iexploreclosed = FALSE; // internet explorer still exist (was not closed), an event will manage this in the futur
+int dynforgen(IHTMLDocument2 *fra, std::wstring *title01);
+IHTMLElement* findhtmlelement(IHTMLDocument2* fra, std::wstring type01, std::wstring name01);
+
+std::wstring resbutlef;
+std::wstring resbutmid;
+std::wstring resbutbot;
+
+std::wstring reskeylef;
+std::wstring reskeymid;
+std::wstring reskeybot;
+
+// these vectors contain data to dynamically generate buttons in left side frame
+std::vector<std::wstring> arrbutnam; // name of button on left frame (also ID)
+std::vector<std::wstring> arrbutdes; // description or caption
+std::vector<std::wstring> arrdepnam; // sector (sectors have a space between them)
+std::vector<std::wstring> arrdepcol; // button color of a sector
+
+std::vector<std::wstring> destmp; // text displayed in front of the input field
+std::vector<std::wstring> namtmp; // name of variable for programming purpose (ID we fetch to get content)
+std::vector<std::wstring> deftmp; // default value (the fill will be pre filled with this value)
+std::vector<std::wstring> typtmp; // type of data: textbox password
+std::vector<std::wstring> errtmp; // text to display after the form "facultatif" blue text "error" red text are special keywords
+std::vector<std::wstring> buttmp; // ok and cancel (usually)
+
+//STDMETHODIMP CEventHandler::Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
+
+class CEventHandler : public IDispatch
+{
+public:
+	STDMETHODIMP QueryInterface(REFIID riid, void **ppvObject);
+	STDMETHODIMP_(ULONG) AddRef();
+	STDMETHODIMP_(ULONG) Release();
+
+	STDMETHODIMP GetTypeInfoCount(UINT *pctinfo);
+	STDMETHODIMP GetTypeInfo(UINT iTInfo, LCID lcid, ITypeInfo **ppTInfo);
+	STDMETHODIMP GetIDsOfNames(REFIID riid, LPOLESTR *rgszNames, UINT cNames, LCID lcid, DISPID *rgDispId);
+	STDMETHODIMP Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr);
+
+	CEventHandler(IHTMLWindow2 *pWindow2);
+
+public:
+	LONG         m_cRef;
+	IHTMLWindow2 *m_pWindow2;
+};
+BOOL PutEventHandler(IHTMLDocument2 *pDocument2, IHTMLElement *pElement);
+
+// ==================================
+// MAIN
+// ==================================
+int _tmain(int argc, _TCHAR* argv[])
+{
+	// get console application handle to manage event in it
+	m_hWnd = FindWindow(NULL, L"ConsoleApplication1");
+	
+	// IE 9.0.8112.16421: IEXPLORE.EXE
+	// Chrome 21.0.1180.60 m : Google Chrome
+	// Firefox 10.0.2 : FIREFOX.EXE
+	// Safari 3.2.2 : Safari.exe
+	// Opera 12.01 : Opera
+	
+	// get default web browser path
+	std::string defaultbrowserpath01;
+	defaultbrowserpath01 = getdefaultbrowserpath();
+	//cout << defaultbrowserpath01;
+
+	HRESULT hr;
+	int dummy;
+	
+	///////////////// project name
+	std::wstring project01 = L"test";
+
+	if (project01 == L"test")
+	{
+		// buttons specific to one project
+		arrbutnam.push_back(L"test");
+		arrbutdes.push_back(L"test");
+		arrdepnam.push_back(L"TEST");
+		arrdepcol.push_back(L"cccccc");
+	}
+
+	// buttons in all of the project
+	arrbutnam.push_back(L"clrframes");
+	arrbutdes.push_back(L"Clear Frames");
+	arrdepnam.push_back(L"OTHER");
+	arrdepcol.push_back(L"cccccc");
+
+	arrbutnam.push_back(L"info");
+	arrbutdes.push_back(L"Information/Help");
+	arrdepnam.push_back(L"OTHER");
+	arrdepcol.push_back(L"cccccc");
+
+	arrbutnam.push_back(L"quit01");
+	arrbutdes.push_back(L"Quit");
+	arrdepnam.push_back(L"ALL");
+	arrdepcol.push_back(L"cccccc");
+
+	// create internet explorer windows and 3 frames: flef, fmid, fbot
+	dummy = create_web_main();
+	
+	///////////////////////////////////////////////////////
+	// main LOOP
+	///////////////////////////////////////////////////////
+	//wcout <<L"\n\nwaiting for events, button click etc.";
+
+	do
+	{
+		doevents();
+
+		if (resbutlef == L"test")
+		{
+			clrfra(fmid);
+			clrfra(fbot);
+			resbutlef = L"";
+
+			dummy = writeln01(fbot, resbutlef);
+			dummy = writeln01(fbot, L"<br><br>");
+			
+			// clear vectors
+			destmp.clear(); namtmp.clear(); deftmp.clear(); typtmp.clear(); errtmp.clear(); buttmp.clear();
+			// data to dynamically generate a input form
+			destmp.push_back(L"Text to enter");
+			namtmp.push_back(L"text01");
+			deftmp.push_back(L"defaultvalue");
+			typtmp.push_back(L"textbox");
+			errtmp.push_back(L"Enter a value please");
+			buttmp.push_back(L"OK"); buttmp.push_back(L"Cancel");
+			
+			std::wstring title01 = L"testinput";
+			// dynamic input form html generation
+			dummy = dynforgen(fmid, &title01);
+
+			dummy = writeln01(fbot, L"<br><br>FIN");
+
+			resbutlef = L"";
+
+		}
+		
+		// common buttons
+		if (resbutlef == L"clrframes")
+		{
+			clrfra(fmid);
+			clrfra(fbot);
+			resbutlef = L"";
+		}
+		
+		// info
+		if (resbutlef == L"info")
+		{
+			clrfra(fmid);
+			clrfra(fbot);
+			resbutlef = L"";
+
+			std::wstring arrhtm[] = {
+				L"INFORMATION / HELP<br><br>",
+				L"Dynamic web interface to manage C++ programs<br><br>",
+				L"By: sergefournier(@)hotmail.com<br>",
+				L"Free to distribute<br>",
+				L"2017-01-15<br>",
+				L"",
+				L"<br>" };
+
+			for (size_t i = 0; i < arrhtm[i].length(); i++)
+			{
+				dummy = writeln01(fbot, arrhtm[i]);
+			}
+			
+		}
+
+	} while (resbutlef != L"quit01");
+
+	// close internet explorer
+	pbrowser->Quit();
+	pbrowser->Release();
+	
+	return 0;
+}
+
+IHTMLDocument2* gethtmele(IHTMLDocument2* phtmldoc2, std::wstring frame01)
+{
+	// get frame object document to write in html frames
+	bool bSearch = true;
+	int hr;
+
+	// https://github.com/SeleniumHQ/selenium/blob/master/cpp/iedriver/DocumentHost.cpp
+	CComQIPtr<IHTMLFramesCollection2> frames;
+
+	hr = phtmldoc2->get_frames(&frames);
+	if (SUCCEEDED(hr) && (frames != NULL))
+	{
+		// get howmany frames
+		long length = 0;
+		hr = frames->get_length(&length);
+
+		if (SUCCEEDED(hr) && length > 0)
+		{
+			CComVariant frame_identifier = NULL;
+			frame_identifier = frame01.c_str();
+
+			CComVariant frame_holder = NULL;
+			hr = frames->item(&frame_identifier, &frame_holder);
+			if (SUCCEEDED(hr))
+			{
+				/// get frame content
+				IHTMLWindow2* interim_result;
+				hr = frame_holder.pdispVal->QueryInterface<IHTMLWindow2>(&interim_result);
+				
+				if (SUCCEEDED(hr))
+				{
+					IDispatch* pIHTMLDoc;
+					hr = interim_result->get_document((IHTMLDocument2 **)&pIHTMLDoc);
+
+					if (SUCCEEDED(hr))
+					{
+						IHTMLDocument2* frameele = NULL;
+						hr = pIHTMLDoc->QueryInterface(IID_IHTMLDocument2, (void**)&frameele);
+						if (SUCCEEDED(hr))
+						{
+							//int dummy = writeln01(frameele, L"TEST222");
+							return frameele;
+						}
+						else
+						{
+							wcout << L"\n";
+							cout << "ERROR getting IHTMLDocument2";
+						}
+					}
+					else
+					{
+						wcout << L"\n";
+						cout << "ERROR getting pointer to IHTMLDocument2";
+					}
+				}
+				else
+				{
+					wcout << L"\n";
+					cout << "ERROR getting window pointer";
+				}
+			}
+			else
+			{
+				wcout << L"\n";
+				cout << "ERROR did not find any frame named: ";
+				wcout << frame01;
+			}
+		}
+		else
+		{
+			wcout << L"\n";
+			cout << "ERROR get_length(&length) - number of frames is 0)";
+		}
+	}
+	else
+	{
+		wcout << L"\n";
+		cout << "ERROR get_frames(&frames) - no frame collection found";
+	}
+	
+}
+int create_web_main()
+{
+	// vector https://msdn.microsoft.com/en-us/library/9xd04bzs.aspx
+
+	int dummy;
+
+	//cout<< arrbutnam[0];
+
+	if (SUCCEEDED(OleInitialize(NULL)))
+	{
+		CoCreateInstance(CLSID_InternetExplorer, NULL, CLSCTX_LOCAL_SERVER, IID_IWebBrowser2, (void**)&pbrowser);
+		if (pbrowser)
+		{
+			VARIANT vEmpty;
+			VariantInit(&vEmpty);
+
+			BSTR bstrURL = SysAllocString(L"about:blank");
+
+			HRESULT hr = pbrowser->Navigate(bstrURL, &vEmpty, &vEmpty, &vEmpty, &vEmpty);
+			if (SUCCEEDED(hr))
+			{
+				pbrowser->put_Left(20);
+				pbrowser->put_Top(10);
+				pbrowser->put_Height(1000); // 1080
+				pbrowser->put_Width(1900); // 1920
+
+				int test = 1;
+				if (test == 1)
+				{
+					pbrowser->put_Left(700);
+					pbrowser->put_Top(10);
+					pbrowser->put_Height(1000); // 1080
+					pbrowser->put_Width(1200); // 1920
+
+				}
+
+				pbrowser->put_AddressBar(VARIANT_TRUE);
+				pbrowser->put_MenuBar(VARIANT_FALSE);
+				pbrowser->put_ToolBar(VARIANT_FALSE);
+				// pHtmlDoc->put_title(BSTR("SkyNet30"));
+				// pHtmlDoc->put_URL(BSTR("www.google.com"));
+				// pHtmlDoc->execCommand(BSTR("RELOAD"));
+				pbrowser->put_Visible(VARIANT_TRUE);
+
+				if (WaitTillLoaded(12)) /// wait 12 tick of 250 ms to expire
+				{
+					// printf("\nready in time");
+					HRESULT hr;
+					IDispatch* pHtmlDocDispatch = NULL;
+					pHtmlDoc = NULL;
+
+					// Retrieve the document object.
+					hr = pbrowser->get_Document(&pHtmlDocDispatch);
+					if (SUCCEEDED(hr) && (pHtmlDocDispatch != NULL))
+					{
+						hr = pHtmlDocDispatch->QueryInterface(IID_IHTMLDocument2, (void**)&pHtmlDoc);
+						
+						if (SUCCEEDED(hr) && (pHtmlDoc != NULL))
+						{
+							//printf("\ngot a DOC");
+
+							// internet explorer interface will use 3 frames
+							std::wstring arrhtm[] = {
+								L"<HTML>",
+								L"<HEAD><TITLE>Skynet30</TITLE>",
+								L"<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">",
+								L"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\">",
+								L"</HEAD>",
+								L"<FRAMESET id='main' COLS=\"13%, *\">",
+								L"<FRAME SRC=\"About:Blank\" NAME=\"flef\" id=\"flef\">",
+								L"<frameset id='main2' rows=\"30%,70%\">",
+								L"<FRAME SRC=\"About:Blank\" NAME=\"fmid\" id=\"fmid\">",
+								L"<FRAME SRC=\"About:Blank\" NAME=\"fbot\" id=\"fbot\">",
+								L"</FRAMESET>",
+								L"</frameset>",
+								L"</HTML>" };
+
+							for (size_t i = 0; i < arrhtm[i].length(); i++)
+							{
+								dummy = writeln01(pHtmlDoc, arrhtm[i]);
+							}
+
+							pbrowser->Refresh();
+
+							// IHTMLDocument2* flef;
+							flef = gethtmele(pHtmlDoc, L"flef");
+							//IHTMLDocument2* fmid;
+							fmid = gethtmele(pHtmlDoc, L"fmid");
+							//IHTMLDocument2* fbot;
+							fbot = gethtmele(pHtmlDoc, L"fbot");
+
+							/////////////////////////////// buttons generation (html) in left frame
+
+							std::wstring departement;
+							std::wstring lasdep;
+							std::wstring html;
+
+							for (int i = 0; i < arrbutnam.size(); i++)
+							{
+								html = L"<input type=\"button\" style=\"height:50px;font-size:14px;width:100%;white-space: normal;\" id=\"" + arrbutnam[i] + L"\" name=\"" + arrbutnam[i] + L"\" value=\"" + arrbutdes[i] + L"\"";
+								int i2 = i;
+
+								if (i>arrdepnam.size())
+									i2 = arrdepnam.size();
+								else
+									departement = arrdepnam[i2];
+
+								if (departement != lasdep)
+								{
+									lasdep = departement;
+									dummy = writeln01(flef, L"<br>" + departement + L"<br>");
+								}
+								html += L" style=\"background-color: #" + arrdepcol[i2] + L"; color: #000000;\"><br>";
+								dummy = writeln01(flef, html);
+							}
+							
+							// find input elements in frame
+							// define event for that button
+							bool success01 = FALSE;
+							IHTMLElement* pElem = NULL;
+							for (int i = 0; i < arrbutnam.size(); i++)
+							{
+								pElem = findhtmlelement(flef, L"INPUT", arrbutnam[i]);
+								success01 = PutEventHandler(flef, pElem);
+							}
+
+							//OleUninitialize();
+							return 0;
+						} // hr = pHtmlDocDispatch->QueryInterface(IID_IHTMLDocument2
+					} // hr = pbrowser->get_Document(&pHtmlDocDispatch);
+				} // waittill loaded (not always working)
+			} // HRESULT hr = pbrowser->Navigate(
+		} //CoCreateInstance(CLSID_InternetExplorer
+		//OleUninitialize();
+	}
+	else
+	{
+		// oleinitialize failed
+	}
+}
+
+// GOOD FULL CODE
+// http://eternalwindows.jp/browser/mshtml/mshtml07.html
+CEventHandler::CEventHandler(IHTMLWindow2 *pWindow2)
+{
+	m_cRef = 1;
+	m_pWindow2 = pWindow2;
+}
+
+STDMETHODIMP CEventHandler::QueryInterface(REFIID riid, void **ppvObject)
+{
+	*ppvObject = NULL;
+
+	if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_IDispatch))
+		*ppvObject = static_cast<IDispatch *>(this);
+	else
+		return E_NOINTERFACE;
+
+	AddRef();
+
+	return S_OK;
+}
+
+STDMETHODIMP_(ULONG) CEventHandler::AddRef()
+{
+	return InterlockedIncrement(&m_cRef);
+}
+
+STDMETHODIMP_(ULONG) CEventHandler::Release()
+{
+	if (InterlockedDecrement(&m_cRef) == 0) {
+		delete this;
+		return 0;
+	}
+
+	return m_cRef;
+}
+
+STDMETHODIMP CEventHandler::GetTypeInfoCount(UINT *pctinfo)
+{
+	*pctinfo = 0;
+
+	return S_OK;
+}
+
+STDMETHODIMP CEventHandler::GetTypeInfo(UINT iTInfo, LCID lcid, ITypeInfo **ppTInfo)
+{
+	return E_NOTIMPL;
+}
+
+STDMETHODIMP CEventHandler::GetIDsOfNames(REFIID riid, LPOLESTR *rgszNames, UINT cNames, LCID lcid, DISPID *rgDispId)
+{
+	return E_NOTIMPL;
+}
+
+STDMETHODIMP CEventHandler::Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pDispParams, VARIANT *pVarResult, EXCEPINFO *pExcepInfo, UINT *puArgErr)
+{
+	// event called when you press a html input button in html frame
+	BSTR          bstr;
+	IHTMLEventObj *pEventObj;
+	IHTMLElement  *pElement;
+	BSTR id01;
+	
+	m_pWindow2->get_event(&pEventObj);
+	pEventObj->get_srcElement(&pElement);
+	pElement->get_tagName(&bstr);
+	pElement->get_id(&id01); // name of button that was pressed
+	
+	//MessageBoxW(NULL, bstr, L"bouton presse", MB_OK);
+	
+	//BSTR to std::wstring:
+	// given BSTR bs
+	assert(id01 != nullptr);
+	std::wstring ws(id01, SysStringLen(id01));
+
+	//std::wstring to BSTR :
+	// given std::wstring ws
+	//assert(!ws.empty());
+	//BSTR bs = SysAllocStringLen(ws.data(), ws.size());
+	
+	//MessageBox(NULL, TEXT("test"), TEXT("OK"), MB_OK);
+	
+	resbutlef = id01;
+
+	SysFreeString(bstr);
+	pElement->Release();
+	pEventObj->Release();
+
+	return S_OK;
+}
+
+BOOL PutEventHandler(IHTMLDocument2* pDocument2, IHTMLElement* pElement)
+{
+	// generate event handler associated with a html button in internet explorer frame
+	
+	//wcout << L"\nstart puteventhandler";
+
+	//BSTR           bstrId;
+	VARIANT        var;
+	//IHTMLElement   *pElement;
+	//IHTMLDocument2 *pDocument2;
+	IHTMLWindow2   *pWindow2;
+	HRESULT hr;
+	IHTMLDocument3* pDocument3;
+
+	// bstrId = SysAllocString(L"test");
+	//hr = pDocument3->getElementById(bstrId, &pElement);
+	
+	hr = pDocument2->QueryInterface(IID_PPV_ARGS(&pDocument3));
+	if (SUCCEEDED(hr) && pDocument3 != NULL)
+	{
+		//pDocument3->QueryInterface(IID_PPV_ARGS(&pDocument2));
+		hr = pDocument2->get_parentWindow(&pWindow2);
+		if (SUCCEEDED(hr) && pWindow2 != NULL)
+		{
+			var.vt = VT_DISPATCH;
+			var.pdispVal = new CEventHandler(pWindow2);
+			if (pElement != NULL)
+			{
+				hr = pElement->put_onclick(var);
+				if (SUCCEEDED(hr))
+				{
+					//MessageBox(NULL, TEXT("test"), TEXT("OK"), MB_OK);
+
+					//SysFreeString(bstrId);
+					var.pdispVal->Release();
+					pWindow2->Release();
+					//pDocument2->Release();
+					pElement->Release();
+
+					return TRUE;
+				}
+				else
+				{
+					wcout << L"\nERROR PutEventHandler event not defined";
+					return FALSE;
+				}
+			}
+			else
+			{
+				wcout << L"\nERROR PutEventHandler pElement is NULL";
+				return FALSE;
+			}
+
+
+		}
+		else
+		{
+			wcout << L"\nERROR PutEventHandler getting pWindow2";
+			return FALSE;
+		}
+	}
+	else
+	{
+		wcout <<L"\nERROR PutEventHandler IHTMLDocument3";
+		return FALSE;
+	}
+}
+void doevents()
+{
+	MSG	Msg;
+	BOOL bRet;
+	//HICON
+	//analog DoEvents() v VB
+	if (PeekMessage(&Msg, m_hWnd, 0, 0, PM_NOREMOVE))
+	{
+		if ((bRet = GetMessage(&Msg, m_hWnd, 0, 0)))
+			DispatchMessage(&Msg);
+	}
+}
+
+IHTMLElement* findhtmlelement(IHTMLDocument2 *fra, std::wstring type01, std::wstring name01)
+{
+	bool bSearch = true;
+	HRESULT hr;
+	
+	// scan doc object collection in html document
+	IHTMLElementCollection* pColl = NULL;
+	hr = fra->get_all(&pColl);
+	if (SUCCEEDED(hr) && (pColl != NULL))
+	{
+		// Obtained the Anchor Collection...
+		long nLength = 0;
+		pColl->get_length(&nLength);
+
+		for (int i = 0; i < nLength && bSearch; i++)
+		{
+			COleVariant vIdx((long)i, VT_I4);
+			IDispatch* pElemDispatch = NULL;
+			IHTMLElement * pElem = NULL;
+
+			hr = pColl->item(vIdx, vIdx, &pElemDispatch);
+
+			if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+			{
+				hr = pElemDispatch->QueryInterface(IID_IHTMLElement, (void**)&pElem);
+
+				if (SUCCEEDED(hr) && (pElem != NULL))
+				{
+					BSTR bstrTagName;
+					std::wstring sTempTagName = L"";
+					hr = pElem->get_tagName(&bstrTagName);
+					if (SUCCEEDED(hr) && (bstrTagName != NULL))
+					{
+						
+						// conversion error
+						sTempTagName = bstrTagName;
+						//SysFreeString(bstrTagName);
+						
+						BSTR bstrtagid = NULL;
+						hr = pElem->get_id(&bstrtagid);
+					if (bstrtagid != NULL)
+						{
+							
+							std::wstring stemptagid = L"";
+
+							stemptagid = bstrtagid;
+
+							if ((sTempTagName == type01) && (stemptagid == name01))
+								{
+									wcout << L"\n Type wanted: ";
+									wcout << type01;
+									wcout << L"   Name wanted: ";
+									wcout << name01;
+
+									//pElemDispatch->Release();
+									return pElem;
+								}
+						} // get_id(&bstrtagid) (id of button)
+					} // if get_tagname
+				} //if (SUCCEEDED(hr) && (pElem != NULL))
+			} //if (SUCCEEDED(hr) && (pElemDispatch != NULL))
+		} //for (int i = 0; i < nLength && bSearch; i++)
+	} //if (SUCCEEDED(hr) && (pColl != NULL))
+}
+
+std::string getdefaultbrowserpath()
+{
+	// get executable path to defaut browser (not working very well in windows 10)
+	// modified from http://www.codeproject.com/internet/urlnewwindow.asp
+	std::string page;
+	std::wstring wstrBrowser01;
+	std::string str01;
+
+	HKEY hKey = NULL;
+
+	// get defaut internet browser
+	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, TEXT("http\\shell\\open\\command"), 0, KEY_READ, &hKey) == ERROR_SUCCESS)
+	{
+		DWORD cbData = 0;
+		if (RegQueryValueEx(hKey, NULL, NULL, NULL, NULL, &cbData) == ERROR_SUCCESS && cbData > 0)
+		{
+			// command key is present
+			TCHAR* browsername01 = new TCHAR[cbData];
+			if (browsername01 != NULL)
+			{
+
+				if (RegQueryValueEx(hKey, NULL, NULL, NULL, (LPBYTE)browsername01, &cbData) == ERROR_SUCCESS)
+					//if (RegQueryValueEx(hKey, NULL, NULL, NULL, reinterpret_cast<LPBYTE>(&browsername01[0]), &cbData) == ERROR_SUCCESS)
+				{
+					wstrBrowser01 = browsername01;
+					// wcout << wstrBrowser01;
+				}
+				delete[] browsername01;
+			}
+		}
+		RegCloseKey(hKey);
+	}
+	else
+	{
+		//printf("\r\nERROR could not read regkey");
+	}
+
+	// get path of executable and remove stuff around it
+	if (wstrBrowser01.length() > 0)
+	{
+		std::string::size_type nStart = wstrBrowser01.find('"', 0);
+
+		// if first is a quote, then exe path is in quotes, so find the second quote
+		if (nStart == 0)
+		{
+			std::string::size_type nEnd = wstrBrowser01.find('"', 1);
+			if (nStart != nEnd && nEnd != std::string::npos)
+			{
+				wstrBrowser01 = wstrBrowser01.substr(nStart + 1, nEnd - nStart - 1);
+			}
+		}
+		// otherwise if no quotes, 2nd point is the first space after the last backslash
+		else
+		{
+			std::string::size_type nIndex = wstrBrowser01.rfind('\\', wstrBrowser01.length() - 1);
+			if (nIndex != std::string::npos)
+			{
+				std::string::size_type nSpace = wstrBrowser01.find(' ', nIndex);
+				if (nSpace != std::string::npos)
+				{
+					wstrBrowser01 = wstrBrowser01.substr(0, nSpace);
+				}
+			}
+		}
+
+		std::wstring wcommand01 = L"\"";
+		wcommand01 += wstrBrowser01;
+		wcommand01 += L"\"";
+		std::string arg01 = "\"";
+		arg01 += "www.google.ca";
+		arg01 += "\"";
+
+		std::string command01(wcommand01.begin(), wcommand01.end());
+
+		//printf("\n");
+		//printf("default browser: ");
+		//printf(command01.c_str());
+
+		// HINSTANCE hinst01 = ShellExecuteW(NULL, L"open", LPCWSTR(wcommand01.c_str()), NULL, NULL, SW_HIDE);
+		//HINSTANCE hinst01 = ShellExecuteA(NULL, "Open", LPCSTR(command01.c_str()), LPCSTR(arg01.c_str()), NULL, 3);
+		//printf("\n");
+		//cout << hinst01;
+
+		// link handle to application
+
+		// COleVariant loc(L"about:blank");
+		// m_explorer.Navigate2("about:blank", NULL, NULL, NULL, NULL);
+		// IDispatch* pHtmlDoc = m_explorer.get_Document();
+		return command01.c_str();
+	}
+	else
+	{
+		//printf("\r\n\r\nERROR strBrowser01.length is 0");
+
+	
+	}
+}
+
+
+int writeln01(IHTMLDocument2* phtmldoc1, std::wstring string01)
+{
+	// write wstring to a html frame
+	SAFEARRAYBOUND bounds[] = { { 1, 0 } }; //Array Contains 2 Elements starting from Index ‘0’ 
+	SAFEARRAY* safearray01 = SafeArrayCreate(VT_VARIANT, 1, bounds); //Create a one-
+	long lIndex[1];
+	VARIANT var;
+	lIndex[0] = 0; // index of the element being inserted in the array 
+	var.vt = VT_BSTR; // type of the element being inserted 
+
+	//var.bstrVal = ::SysAllocStringLen(L"<br>The<br>First String", 16); // the value of the element being inserted 
+	var.bstrVal = ::SysAllocStringLen(string01.c_str(), string01.length()); // the value of the element being inserted 
+	HRESULT hr = SafeArrayPutElement(safearray01, lIndex, &var); // insert the element 
+	//if (WaitTillLoaded(0)== TRUE)
+	//{
+	phtmldoc1->writeln(safearray01);
+	//}
+
+	return 0;
+}
+
+bool WaitTillLoaded(int nTimeout)
+{
+	// wait till internet explorer is ready to receive stuff
+	READYSTATE result;
+	DWORD nFirstTick = GetTickCount();
+
+	do
+	{
+		pbrowser->get_ReadyState(&result);
+
+		if (result != READYSTATE_COMPLETE)
+		{
+			Sleep(100);
+		}
+		if (nTimeout > 0)
+		{
+			if ((GetTickCount() - nFirstTick) > nTimeout)
+			{
+				break;
+			}
+		}
+	} while (result != READYSTATE_COMPLETE);
+
+	if (result == READYSTATE_COMPLETE)
+	{
+		//cout << "true";
+		return TRUE;
+	}
+	else
+	{
+		//cout << "false";
+		return FALSE;
+	}
+}
+
+void clrfra(IHTMLDocument2 *fra)
+{
+	// clear bottom html frame
+	BSTR bstrContent = NULL;
+	IHTMLElement *p = NULL;
+
+	fra->get_body(&p);
+	if (p)
+	{
+		p->put_innerHTML(L"");
+		//p->get_innerHTML(&bstrContent);
+		p->Release();
+	}
+}
+
+int dynforgen(IHTMLDocument2* fra, std::wstring *title01)
+{
+	//std::vector<std::wstring> *destmp, std::vector<std::wstring> *namtmp, 
+	//std::vector<std::wstring> *deftmp, std::vector<std::wstring> *typtmp, std::vector<std::wstring> *errtmp,
+	//td::vector<std::wstring> *buttmp, 
+	
+	// html content
+	int dummy;
+	int deffoc;
+	std::wstring col;
+	std::wstring type01;
+
+	// do all the input process with inner html
+	IHTMLElement *p = NULL;
+	// get inner html body
+	fra->get_body(&p);
+	if (p)
+	{
+		BOOL valid01 = FALSE;
+
+		do
+		{
+
+			clrfra(fra); // clear frame
+
+			std::wstring h = L"";
+
+			// title with bigger letters
+			h = L"<h3><span class=SpellE>" + *title01 + L"</span></h3>";
+
+			for (int i = 0; i < destmp.size(); i++)
+			{
+				// focus on first empty field
+				deffoc = 0;
+				if (deftmp[i] == L"")
+				{
+					if (errtmp[i] != L"falcultatif")
+					{
+						h += L"<BODY onLoad=\"document.form01." + namtmp[i] + L".focus()\">";
+						deffoc = 1;
+					}
+				}
+			}
+
+			if (deffoc == 0)
+			{
+				// if no empty field just focus on first element
+				h += L"<BODY onLoad=\"document.form01." + namtmp[0] + L".focus()\">";
+			}
+
+			h += L"<div class=MsoNormal align=center style='text-align:center'>";
+			h += L"</div>";
+
+			h += L"<form name=form01>";
+
+			for (int i = 0; i < namtmp.size(); i++)
+			{
+				h += destmp[i] + L": ";
+
+				h += L"<input type=\"" + typtmp[i] + L"\" ";
+				h += L"id=" + namtmp[i] + L" ";
+				h += L"NAME=\"" + namtmp[i] + L"\" ";
+				h += L"size=\"" + deftmp[i] + L"\" ";
+				h += L"value=\"" + deftmp[i] + L"\" ";
+				h += L"onKeypress=\"return event.keyCode!=13\"";
+
+				if (errtmp[i] != L"ERROR")
+					col = L"red";
+				else
+					col = L"blue";
+				h += L"&nbsp; <b><span style='color:" + col + L"'>&nbsp" + errtmp[i] + L"</span></b><br style='mso-special-character:line-break'>";
+			}
+			h += L"<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>";
+			h += L"<![endif]></p>";
+
+			for (int i = 0; i < buttmp.size(); i++)
+			{
+				// ok button and cancel button
+				type01 = L"button";
+				h += L"<input type=\"" + type01 + L"\" id=\"" + buttmp[i] + L"\" name=\"" + buttmp[i] + L"\" ";
+				h += L"value=\"&nbsp;" + buttmp[i] + L"&nbsp;\">";
+				h += L"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+				//html = L"<input type=\"button\" style=\"height:50px;font-size:14px;width:100%;white-space: normal;\" "
+				//"id=\"" + arrbutnam[i] + L"\" name=\"" + arrbutnam[i] + L"\" value=\"" + arrbutdes[i] + L"\"";
+			}
+
+			h += L"</div>";
+			h += L"</form>";
+			h += L"</body>";
+			h += L"</html>";
+
+			h += L"";
+
+			//std::wstring to BSTR //given std::wstring h
+			assert(!h.empty());
+			BSTR bs = SysAllocStringLen(h.data(), h.size());
+			p->put_innerHTML(bs);
+
+			// define events for OK and Cancel buttons
+			for (int i = 0; i < buttmp.size(); i++)
+			{
+				bool success01 = FALSE;
+				IHTMLElement* pElem = NULL;
+				//wcout << L"\n" + buttmp[i];
+
+				pElem = findhtmlelement(fra, L"INPUT", buttmp[i]);
+				success01 = PutEventHandler(fra, pElem);
+
+			}
+
+			do
+			{
+				doevents;
+				wcout <<L"\n resbutlef: ";
+				
+			} while ((resbutlef != L"Cancel") && (resbutlef != L"OK"));
+			resbutlef = L"";
+
+			wcout <<L"\n button pressed";
+
+			valid01 = TRUE;
+			doevents;
+
+		} while (valid01 != FALSE); // validate the string, if not valid, remake form and input again
+		doevents;
+	}
+	return 0;
+}

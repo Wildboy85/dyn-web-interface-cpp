@@ -1,0 +1,535 @@
+﻿  stdafx.cpp
+  Remarque : inclusion du fichier :  c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\stdafx.h
+  Remarque : inclusion du fichier :   c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\targetver.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\SDKDDKVer.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\sal.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\concurrencysal.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vadefs.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wstdio.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_stdio_config.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\tchar.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\wchar.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_memcpy_s.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\errno.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime_string.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wconio.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wctype.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wdirect.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wio.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_share.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wprocess.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wstdlib.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wstring.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_wtime.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\sys/stat.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\sys/types.h
+  ConsoleApplication1.cpp
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afx.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\new.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime_new_debug.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime_new.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\crtdefs.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxver_.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxv_w32.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsdkver.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\winapifamily.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\Windows.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\excpt.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\stdarg.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\windef.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\minwindef.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\specstrings.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\specstrings_strict.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Windows Kits\8.1\Include\shared\specstrings_undef.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\driverspecs.h
+  Remarque : inclusion du fichier :          c:\program files (x86)\windows kits\8.1\include\shared\sdv_driverspecs.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\winnt.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\ctype.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\kernelspecs.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\basetsd.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\guiddef.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h
+  Remarque : inclusion du fichier :           C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_memory.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\pshpack4.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\poppack.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\pshpack4.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\poppack.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack4.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\pshpack4.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\pshpack2.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\poppack.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\pshpack2.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack2.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\poppack.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\pshpack8.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\poppack.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\poppack.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\apiset.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ktmtypes.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winbase.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\apisetcconv.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\minwinbase.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\processenv.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\fileapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\debugapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\utilapiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\handleapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\errhandlingapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\fibersapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\namedpipeapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\profileapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\heapapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\ioapiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\synchapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\interlockedapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\processthreadsapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\sysinfoapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\memoryapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\threadpoollegacyapiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\threadpoolapiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\bemapiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\jobapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\wow64apiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\libloaderapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\securitybaseapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\namespaceapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\systemtopologyapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\processtopologyapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\securityappcontainer.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\realtimeapiset.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\winerror.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\timezoneapi.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\wingdi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack2.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack2.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack4.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack4.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winuser.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack2.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\tvout.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winnls.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\datetimeapi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\stringapiset.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\winnls.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\wincon.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\consoleapi.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winver.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\verrsrc.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winreg.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\reason.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winnetwk.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\wnnc.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\stralign.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsvc.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\mcx.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\imm.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\ime_cmodes.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\zmouse.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\CommCtrl.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\prsht.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack4.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxv_dll.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdlib.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_malloc.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_search.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stddef.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\limits.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\time.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\malloc.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\crtdbg.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxstr.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\mbstring.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlcore.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atldef.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlrc.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\Ole2.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\objbase.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpc.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpcdce.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpcdcep.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\rpcnsi.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpcnterr.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpcasync.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpcndr.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\rpcnsip.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\rpcsal.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\combaseapi.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\wtypesbase.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\shared\guiddef.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\unknwnbase.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\objidlbase.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\guiddef.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\cguid.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\objidl.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\unknwn.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\wtypes.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\urlmon.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\oleidl.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\servprov.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\msxml.h
+  Remarque : inclusion du fichier :         c:\program files (x86)\windows kits\8.1\include\um\oaidl.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\propidl.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\oleauto.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlchecked.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlexcept.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atltrace.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlconv.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlalloc.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlsimpcoll.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlwinverapi.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\cstringt.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlsimpstr.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlmem.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\ATLComMem.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlcomcli.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\um\OleCtl.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Windows Kits\8.1\Include\um\ocidl.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\intrin.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\intrin0.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\setjmp.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\immintrin.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\wmmintrin.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\nmmintrin.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\smmintrin.h
+  Remarque : inclusion du fichier :           C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\tmmintrin.h
+  Remarque : inclusion du fichier :            C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\pmmintrin.h
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\emmintrin.h
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xmmintrin.h
+  Remarque : inclusion du fichier :               C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\mmintrin.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\zmmintrin.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\ammintrin.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\mm3dnow.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atltransactionmanager.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\ktmw32.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atltime.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\oledb.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\transact.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack2.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\accctrl.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxcoll.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxstat_.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atltypes.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxtls_.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxcoll.inl
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afx.inl
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\string
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\istream
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\ostream
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\ios
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xlocnum
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\climits
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\yvals.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xkeycheck.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\crtdefs.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\use_ansi.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cmath
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cstdlib
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\math.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xtgmath.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xtr1common
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cstdio
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\streambuf
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xiosbase
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xlocale
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cstring
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\stdexcept
+  Remarque : inclusion du fichier :           C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\exception
+  Remarque : inclusion du fichier :            C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\type_traits
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xstddef
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cstddef
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\initializer_list
+  Remarque : inclusion du fichier :            C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime_exception.h
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\eh.h
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_terminate.h
+  Remarque : inclusion du fichier :           C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xstring
+  Remarque : inclusion du fichier :            C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xmemory0
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cstdint
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\stdint.h
+  Remarque : inclusion du fichier :               C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\limits
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\ymath.h
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cfloat
+  Remarque : inclusion du fichier :               C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\float.h
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cwchar
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\new
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xutility
+  Remarque : inclusion du fichier :              C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\utility
+  Remarque : inclusion du fichier :               C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\iosfwd
+  Remarque : inclusion du fichier :             C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xatomic0.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\typeinfo
+  Remarque : inclusion du fichier :           C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime_typeinfo.h
+  Remarque : inclusion du fichier :            C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xlocinfo
+  Remarque : inclusion du fichier :           C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xlocinfo.h
+  Remarque : inclusion du fichier :            C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\locale.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xfacet
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\system_error
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cerrno
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xcall_once.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\share.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xstring_insert.h
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\iostream
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vector
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\xmemory
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Windows Kits\8.1\Include\um\Exdisp.h
+  Remarque : inclusion du fichier :   c:\program files (x86)\windows kits\8.1\include\um\docobj.h
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\comdef.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\comutil.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\comip.h
+  Remarque : inclusion du fichier :   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\comdefsp.h
+ConsoleApplication1.cpp(24): warning C4192: exclusion automatique de 'OLECMDID' lors de l'importation de la bibliothèque de types 'shdocvw.dll'
+ConsoleApplication1.cpp(24): warning C4192: exclusion automatique de 'OLECMDF' lors de l'importation de la bibliothèque de types 'shdocvw.dll'
+ConsoleApplication1.cpp(24): warning C4192: exclusion automatique de 'OLECMDEXECOPT' lors de l'importation de la bibliothèque de types 'shdocvw.dll'
+ConsoleApplication1.cpp(24): warning C4192: exclusion automatique de 'tagREADYSTATE' lors de l'importation de la bibliothèque de types 'shdocvw.dll'
+  Remarque : inclusion du fichier :  c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\release\shdocvw.tlh
+  Remarque : inclusion du fichier :   c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\release\shdocvw.tli
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Windows Kits\8.1\Include\um\MsHTML.h
+  Remarque : inclusion du fichier :   c:\program files (x86)\windows kits\8.1\include\um\dimm.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\imm.h
+  Remarque : inclusion du fichier :   c:\program files (x86)\windows kits\8.1\include\um\shtypes.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :   c:\program files (x86)\windows kits\8.1\include\um\dispex.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\8.1\Include\shared\dxgitype.h
+  Remarque : inclusion du fichier :    c:\program files (x86)\windows kits\8.1\include\shared\dxgiformat.h
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxdisp.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxwin.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\shellapi.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxres.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\commdlg.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\prsht.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxctrlcontainer.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\ShObjIdl.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\comcat.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\prsht.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\propsys.h
+  Remarque : inclusion du fichier :      c:\program files (x86)\windows kits\8.1\include\um\StructuredQueryCondition.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\propkeydef.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\ObjectArray.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\sherrors.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\prsht.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\thumbcache.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlhandler.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\Filter.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlstr.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atlbase.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\WinSock2.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ws2def.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\8.1\Include\shared\inaddr.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\qos.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\atliface.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\um\oleacc.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\process.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\corecrt_startup.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\math.h
+  Remarque : inclusion du fichier :         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime_startup.h
+  Remarque : inclusion du fichier :          C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\vcruntime.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\um\Shlwapi.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\statreg.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\tpcshrd.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\vssym32.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\VSStyle.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ws2ipdef.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\in6addr.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\WinDNS.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\iphlpapi.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\iprtrmib.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\mprapidef.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\lmcons.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ipifcons.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ipmib.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ifmib.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ifdef.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\nldef.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\tcpmib.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\udpmib.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\ipexport.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\packon.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\packoff.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\iptypes.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\tcpestats.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\netioapi.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\ntddndis.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\devpkey.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\devpropdef.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pciprop.h
+  Remarque : inclusion du fichier :       C:\Program Files (x86)\Windows Kits\8.1\Include\shared\windot11.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\WlanTypes.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\dwmapi.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\uxtheme.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\HtmlHelp.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\UIAnimation.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\windows kits\8.1\include\um\dcompanimation.h
+  Remarque : inclusion du fichier :    c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\afxanimationcontroller.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\afxanimationhelper.h
+  Remarque : inclusion du fichier :     c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\afxtempl.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxplex_.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxmsg_.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxdd_.h
+  Remarque : inclusion du fichier :    c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\afxrendertarget.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\shared\d3d9types.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\d2d1.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\dcommon.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\D2DErr.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\D2DBaseTypes.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\d3d10_1.h
+  Remarque : inclusion du fichier :       c:\program files (x86)\windows kits\8.1\include\um\d3d10.h
+  Remarque : inclusion du fichier :        C:\Program Files (x86)\Windows Kits\8.1\Include\shared\dxgi.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\d3dcommon.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\d3d10sdklayers.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\d3d10misc.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\d3d10shader.h
+  Remarque : inclusion du fichier :        c:\program files (x86)\windows kits\8.1\include\um\d3d10effect.h
+  Remarque : inclusion du fichier :       c:\program files (x86)\windows kits\8.1\include\um\d3d10_1shader.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\um\d2d1helper.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\dwrite.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\wincodec.h
+  Remarque : inclusion du fichier :      C:\Program Files (x86)\Windows Kits\8.1\Include\shared\intsafe.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxdll_.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxwin1.inl
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxwin2.inl
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxwin3.inl
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxwin4.inl
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxlayout.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\8.1\Include\um\ShlObj.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\um\shlguid.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\isguids.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\shldisp.h
+  Remarque : inclusion du fichier :     C:\Program Files (x86)\Windows Kits\8.1\Include\um\knownfolders.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack1.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\pshpack8.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\8.1\Include\shared\poppack.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\ATLComTime.h
+  Remarque : inclusion du fichier :    C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\math.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxocc.h
+  Remarque : inclusion du fichier :    c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\olebind.h
+  Remarque : inclusion du fichier :    c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\ocdbid.h
+  Remarque : inclusion du fichier :    c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\atlmfc\include\ocdb.h
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include\afxole.inl
+  Remarque : inclusion du fichier :  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cassert
+  Remarque : inclusion du fichier :   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\assert.h
+ConsoleApplication1.cpp(227): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(131): warning C4101: 'hr' : variable locale non référencée
+ConsoleApplication1.cpp(476): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(481): warning C4018: '>' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(499): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(905): warning C4018: '>' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(974): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(999): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(1019): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(1042): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(1089): warning C4018: '<' : incompatibilité signed/unsigned
+ConsoleApplication1.cpp(936): warning C4101: 'dummy' : variable locale non référencée
+ConsoleApplication1.cpp(1192): warning C4101: 'e' : variable locale non référencée
+  Génération de code en cours
+c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(375): warning C4715: 'gethtmele' : les chemins de contrôle ne retournent pas tous une valeur
+c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(767): warning C4715: 'findhtmlelement' : les chemins de contrôle ne retournent pas tous une valeur
+c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(865): warning C4715: 'getdefaultbrowserpath' : les chemins de contrôle ne retournent pas tous une valeur
+c:\users\administrateur\documents\visual studio 2013\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(521): warning C4715: 'create_web_main' : les chemins de contrôle ne retournent pas tous une valeur
+  All 493 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Fin de la génération du code
+  ConsoleApplication1.vcxproj -> C:\Users\Administrateur\Documents\Visual Studio 2013\Projects\ConsoleApplication1\Release\ConsoleApplication1.exe
+  ConsoleApplication1.vcxproj -> C:\Users\Administrateur\Documents\Visual Studio 2013\Projects\ConsoleApplication1\Release\ConsoleApplication1.pdb (Full PDB)
